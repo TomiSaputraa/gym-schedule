@@ -1,424 +1,1009 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jadwal Gym — Cowok & Cewek</title>
-<meta name="description" content="Jadwal latihan gym lengkap untuk cowok dan cewek pemula dengan program terstruktur.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jadwal Gym</title>
+  <meta name="description" content="Jadwal latihan gym untuk puja dengan program terstruktur." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  :root {
-    --bg: #0a0a0f;
-    --surface: rgba(255,255,255,0.04);
-    --surface-hover: rgba(255,255,255,0.07);
-    --glass: rgba(255,255,255,0.06);
-    --glass-border: rgba(255,255,255,0.08);
-    --text: #e8e8ed;
-    --text-secondary: #8b8b9e;
-    --accent-blue: #6366f1;
-    --accent-pink: #ec4899;
-    --accent-green: #22c55e;
-    --accent-amber: #f59e0b;
-    --accent-cyan: #06b6d4;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --radius-xs: 6px;
-  }
+    :root {
+      --bg: #0a0a0f;
+      --surface: rgba(255, 255, 255, 0.04);
+      --surface-hover: rgba(255, 255, 255, 0.07);
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text: #e8e8ed;
+      --text-secondary: #8b8b9e;
+      --accent-blue: #6366f1;
+      --accent-pink: #ec4899;
+      --accent-green: #22c55e;
+      --accent-amber: #f59e0b;
+      --accent-cyan: #06b6d4;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+    }
 
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+    body {
+      font-family:
+        "Inter",
+        -apple-system,
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  /* Animated background orbs */
-  .bg-orbs {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-  }
-  .bg-orbs .orb {
-    position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15;
-    animation: orbFloat 20s ease-in-out infinite;
-  }
-  .bg-orbs .orb:nth-child(1) {
-    width: 500px; height: 500px; background: var(--accent-blue);
-    top: -10%; left: -10%; animation-delay: 0s;
-  }
-  .bg-orbs .orb:nth-child(2) {
-    width: 400px; height: 400px; background: var(--accent-pink);
-    bottom: -10%; right: -10%; animation-delay: -7s;
-  }
-  .bg-orbs .orb:nth-child(3) {
-    width: 300px; height: 300px; background: var(--accent-cyan);
-    top: 40%; left: 50%; animation-delay: -14s;
-  }
-  @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(40px, -30px) scale(1.1); }
-    66% { transform: translate(-30px, 20px) scale(0.9); }
-  }
+    /* Animated background orbs */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
 
-  .app { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .bg-orbs .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.15;
+      animation: orbFloat 20s ease-in-out infinite;
+    }
 
-  /* Header */
-  .header {
-    text-align: center; margin-bottom: 2.5rem;
-    animation: fadeUp 0.6s ease-out both;
-  }
-  .header .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-  .header h1 {
-    font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #fff 0%, var(--accent-blue) 50%, var(--accent-pink) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .header p { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.4rem; }
+    .bg-orbs .orb:nth-child(1) {
+      width: 500px;
+      height: 500px;
+      background: var(--accent-blue);
+      top: -10%;
+      left: -10%;
+      animation-delay: 0s;
+    }
 
-  /* Tabs */
-  .tabs {
-    display: flex; gap: 6px; margin-bottom: 2rem; padding: 4px;
-    background: var(--surface); border-radius: 14px; border: 1px solid var(--glass-border);
-    animation: fadeUp 0.6s 0.1s ease-out both;
-  }
-  .tab-btn {
-    flex: 1; padding: 12px 0; border: none; border-radius: 11px;
-    background: transparent; cursor: pointer; font-family: inherit;
-    font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);
-    transition: all 0.3s cubic-bezier(0.4,0,0.2,1); position: relative;
-  }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active-cowok {
-    background: linear-gradient(135deg, var(--accent-blue), #818cf8);
-    color: #fff; box-shadow: 0 4px 20px rgba(99,102,241,0.35);
-  }
-  .tab-btn.active-cewek {
-    background: linear-gradient(135deg, var(--accent-pink), #f472b6);
-    color: #fff; box-shadow: 0 4px 20px rgba(236,72,153,0.35);
-  }
+    .bg-orbs .orb:nth-child(2) {
+      width: 400px;
+      height: 400px;
+      background: var(--accent-pink);
+      bottom: -10%;
+      right: -10%;
+      animation-delay: -7s;
+    }
 
-  /* Tip box */
-  .tip-box {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    border-radius: var(--radius); padding: 1rem 1.25rem;
-    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
-    margin-bottom: 1.5rem; backdrop-filter: blur(12px);
-    display: flex; align-items: flex-start; gap: 10px;
-  }
-  .tip-box .tip-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .bg-orbs .orb:nth-child(3) {
+      width: 300px;
+      height: 300px;
+      background: var(--accent-cyan);
+      top: 40%;
+      left: 50%;
+      animation-delay: -14s;
+    }
 
-  /* Day card */
-  .day-card {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    border-radius: var(--radius); padding: 1.25rem;
-    margin-bottom: 14px; backdrop-filter: blur(12px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp 0.5s ease-out both;
-  }
-  .day-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    border-color: rgba(255,255,255,0.12);
-  }
+    @keyframes orbFloat {
 
-  .day-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-  .day-number {
-    width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700; color: #fff; flex-shrink: 0;
-  }
-  .day-number.cowok-bg { background: linear-gradient(135deg, var(--accent-blue), #818cf8); }
-  .day-number.cewek-bg { background: linear-gradient(135deg, var(--accent-pink), #f472b6); }
-  .day-info { flex: 1; min-width: 0; }
-  .day-title { font-size: 1rem; font-weight: 700; color: var(--text); }
-  .day-focus-text { font-size: 0.78rem; color: var(--text-secondary); margin-top: 1px; }
-  .day-badge {
-    font-size: 0.7rem; font-weight: 600; padding: 4px 10px;
-    border-radius: 20px; text-transform: uppercase; letter-spacing: 0.04em;
-  }
-  .badge-active { background: rgba(34,197,94,0.15); color: var(--accent-green); }
-  .badge-rest { background: rgba(139,139,158,0.12); color: var(--text-secondary); }
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
 
-  /* Section label */
-  .section-label {
-    font-size: 0.7rem; font-weight: 600; color: var(--text-secondary);
-    text-transform: uppercase; letter-spacing: 0.06em;
-    margin: 14px 0 8px; padding-left: 2px;
-  }
+      33% {
+        transform: translate(40px, -30px) scale(1.1);
+      }
 
-  /* Exercise items */
-  .exercise-list { display: flex; flex-direction: column; gap: 6px; }
-  .exercise-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 12px; background: var(--surface); border-radius: var(--radius-sm);
-    border: 1px solid transparent;
-    transition: all 0.25s ease; cursor: default;
-  }
-  .exercise-item:hover {
-    background: var(--surface-hover);
-    border-color: var(--glass-border);
-    transform: translateX(4px);
-  }
-  .exercise-name { font-size: 0.85rem; color: var(--text); font-weight: 500; }
-  .exercise-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .muscle-tag {
-    font-size: 0.68rem; font-weight: 600; padding: 3px 8px;
-    border-radius: 6px; white-space: nowrap;
-  }
-  .muscle-tag.cowok-tag { background: rgba(99,102,241,0.12); color: #a5b4fc; }
-  .muscle-tag.cewek-tag { background: rgba(236,72,153,0.12); color: #f9a8d4; }
-  .exercise-set {
-    font-size: 0.78rem; color: var(--text-secondary); font-weight: 500;
-    white-space: nowrap; font-variant-numeric: tabular-nums;
-  }
+      66% {
+        transform: translate(-30px, 20px) scale(0.9);
+      }
+    }
 
-  /* Rest box */
-  .rest-box {
-    background: var(--glass); border: 1px solid var(--glass-border);
-    border-radius: var(--radius); padding: 1.5rem;
-    text-align: center; margin-bottom: 14px; backdrop-filter: blur(12px);
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp 0.5s ease-out both;
-  }
-  .rest-box .rest-icon { font-size: 1.5rem; margin-bottom: 6px; }
-  .rest-box .rest-day { font-weight: 700; font-size: 0.95rem; color: var(--text); }
-  .rest-box .rest-desc { font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; }
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
 
-  /* Tab content */
-  .tab-content { display: none; }
-  .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s ease-out both;
+    }
 
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+    .header .icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
 
-  /* Progress indicator */
-  .progress-bar {
-    width: 100%; height: 3px; background: var(--surface);
-    border-radius: 4px; margin-bottom: 2rem; overflow: hidden;
-    animation: fadeUp 0.6s 0.15s ease-out both;
-  }
-  .progress-bar .fill {
-    height: 100%; border-radius: 4px; transition: width 0.6s ease;
-  }
-  .progress-bar .fill.cowok-fill {
-    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
-  }
-  .progress-bar .fill.cewek-fill {
-    background: linear-gradient(90deg, var(--accent-pink), var(--accent-amber));
-  }
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg,
+          #fff 0%,
+          var(--accent-blue) 50%,
+          var(--accent-pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-  .stats-row {
-    display: flex; gap: 10px; margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s 0.2s ease-out both;
-  }
-  .stat-card {
-    flex: 1; background: var(--glass); border: 1px solid var(--glass-border);
-    border-radius: var(--radius-sm); padding: 12px 14px; text-align: center;
-    backdrop-filter: blur(12px);
-  }
-  .stat-value { font-size: 1.3rem; font-weight: 800; }
-  .stat-value.cowok-text { color: #818cf8; }
-  .stat-value.cewek-text { color: #f472b6; }
-  .stat-label { font-size: 0.7rem; color: var(--text-secondary); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .header p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 0.4rem;
+    }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 2rem;
+      padding: 4px;
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+      animation: fadeUp 0.6s 0.1s ease-out both;
+    }
 
-  /* Responsive */
-  @media (max-width: 500px) {
-    .header h1 { font-size: 1.5rem; }
-    .app { padding: 1.25rem 1rem 3rem; }
-    .day-card { padding: 1rem; }
-    .exercise-name { font-size: 0.8rem; }
-  }
-</style>
+    .tab-btn {
+      flex: 1;
+      padding: 12px 0;
+      border: none;
+      border-radius: 11px;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+    }
+
+    .tab-btn.active-cowok {
+      background: linear-gradient(135deg, var(--accent-blue), #818cf8);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+    }
+
+    .tab-btn.active-cewek {
+      background: linear-gradient(135deg, var(--accent-pink), #f472b6);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(236, 72, 153, 0.35);
+    }
+
+    /* Tip box */
+    .tip-box {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .tip-box .tip-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Day card */
+    .day-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 14px;
+      backdrop-filter: blur(12px);
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease-out both;
+    }
+
+    .day-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .day-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .day-number.cowok-bg {
+      background: linear-gradient(135deg, var(--accent-blue), #818cf8);
+    }
+
+    .day-number.cewek-bg {
+      background: linear-gradient(135deg, var(--accent-pink), #f472b6);
+    }
+
+    .day-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .day-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .day-focus-text {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    .day-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-active {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent-green);
+    }
+
+    .badge-rest {
+      background: rgba(139, 139, 158, 0.12);
+      color: var(--text-secondary);
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 14px 0 8px;
+      padding-left: 2px;
+    }
+
+    /* Exercise items */
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .exercise-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+      cursor: default;
+    }
+
+    .exercise-item:hover {
+      background: var(--surface-hover);
+      border-color: var(--glass-border);
+      transform: translateX(4px);
+    }
+
+    .exercise-name {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .exercise-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .muscle-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .muscle-tag.cowok-tag {
+      background: rgba(99, 102, 241, 0.12);
+      color: #a5b4fc;
+    }
+
+    .muscle-tag.cewek-tag {
+      background: rgba(236, 72, 153, 0.12);
+      color: #f9a8d4;
+    }
+
+    .exercise-set {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Rest box */
+    .rest-box {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 14px;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease-out both;
+    }
+
+    .rest-box .rest-icon {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .rest-box .rest-day {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .rest-box .rest-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Tab content */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Progress indicator */
+    .progress-bar {
+      width: 100%;
+      height: 3px;
+      background: var(--surface);
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+      animation: fadeUp 0.6s 0.15s ease-out both;
+    }
+
+    .progress-bar .fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    .progress-bar .fill.cowok-fill {
+      background: linear-gradient(90deg,
+          var(--accent-blue),
+          var(--accent-cyan));
+    }
+
+    .progress-bar .fill.cewek-fill {
+      background: linear-gradient(90deg,
+          var(--accent-pink),
+          var(--accent-amber));
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.2s ease-out both;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .stat-value.cowok-text {
+      color: #818cf8;
+    }
+
+    .stat-value.cewek-text {
+      color: #f472b6;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .app {
+        padding: 1.25rem 1rem 3rem;
+      }
+
+      .day-card {
+        padding: 1rem;
+      }
+
+      .exercise-name {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-<div class="bg-orbs">
-  <div class="orb"></div>
-  <div class="orb"></div>
-  <div class="orb"></div>
-</div>
-
-<div class="app">
-  <div class="header">
-    <div class="icon">🏋️</div>
-    <h1>Jadwal Gym</h1>
-    <p>Program latihan terstruktur untuk pemula</p>
+  <div class="bg-orbs">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
   </div>
 
-  <div class="tabs">
-    <button class="tab-btn active-cowok" id="btn-cowok" onclick="switchTab('cowok')">💪 Cowok</button>
-    <button class="tab-btn" id="btn-cewek" onclick="switchTab('cewek')">🔥 Cewek</button>
+  <div class="app">
+    <div class="header">
+      <div class="icon">🏋️</div>
+      <h1>Jadwal Gym Untuk Si Manis🤍</h1>
+      <p>Program latihan terstruktur</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active-cowok" id="btn-cowok" onclick="switchTab('cowok')">
+        💪 Cowok
+      </button>
+      <button class="tab-btn" id="btn-cewek" onclick="switchTab('cewek')">
+        🔥 Cewek
+      </button>
+    </div>
+
+    <div class="progress-bar">
+      <div class="fill cowok-fill" id="progress-fill" style="width: 43%"></div>
+    </div>
+
+    <div id="stats-container"></div>
+
+    <div id="tab-cowok" class="tab-content active"></div>
+    <div id="tab-cewek" class="tab-content"></div>
   </div>
 
-  <div class="progress-bar"><div class="fill cowok-fill" id="progress-fill" style="width:43%"></div></div>
+  <script>
+    const data = {
+      cowok: {
+        tip: "Fokus otot lengan, bahu lebar, dada, dan six pack. Program Push/Pull/Legs 3–4x seminggu.",
+        stats: { hari: 3, optional: 1, exercises: 22 },
+        days: [
+          {
+            day: "Senin",
+            badge: "Latihan",
+            badgeClass: "badge-active",
+            focus: "Dada + Trisep",
+            sections: [
+              {
+                label: "Warm-up (10 menit)",
+                exercises: [
+                  {
+                    name: "Treadmill jalan santai",
+                    set: "10 menit",
+                    muscle: "",
+                  },
+                ],
+              },
+              {
+                label: "Latihan inti",
+                exercises: [
+                  { name: "Flat Bench Press", set: "4 × 10", muscle: "Dada" },
+                  {
+                    name: "Incline Dumbbell Press",
+                    set: "3 × 12",
+                    muscle: "Dada atas",
+                  },
+                  { name: "Cable Chest Fly", set: "3 × 12", muscle: "Dada" },
+                  {
+                    name: "Tricep Pushdown",
+                    set: "3 × 12",
+                    muscle: "Trisep",
+                  },
+                  { name: "Skull Crusher", set: "3 × 10", muscle: "Trisep" },
+                ],
+              },
+              {
+                label: "Core (penutup)",
+                exercises: [
+                  { name: "Plank", set: "3 × 40 dtk", muscle: "Core" },
+                  { name: "Cable Crunch", set: "3 × 15", muscle: "Perut" },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Selasa",
+            badge: "Istirahat",
+            badgeClass: "badge-rest",
+            focus: "Recovery",
+            rest: true,
+          },
+          {
+            day: "Rabu",
+            badge: "Latihan",
+            badgeClass: "badge-active",
+            focus: "Punggung + Bisep",
+            sections: [
+              {
+                label: "Warm-up (10 menit)",
+                exercises: [
+                  {
+                    name: "Treadmill jalan santai",
+                    set: "10 menit",
+                    muscle: "",
+                  },
+                ],
+              },
+              {
+                label: "Latihan inti",
+                exercises: [
+                  { name: "Lat Pulldown", set: "4 × 10", muscle: "Punggung" },
+                  {
+                    name: "Seated Cable Row",
+                    set: "3 × 12",
+                    muscle: "Punggung",
+                  },
+                  { name: "Barbell Row", set: "3 × 10", muscle: "Punggung" },
+                  { name: "Barbell Curl", set: "3 × 12", muscle: "Bisep" },
+                  { name: "Hammer Curl", set: "3 × 12", muscle: "Bisep" },
+                ],
+              },
+              {
+                label: "Core (penutup)",
+                exercises: [
+                  {
+                    name: "Hanging Leg Raise",
+                    set: "3 × 12",
+                    muscle: "Perut",
+                  },
+                  { name: "Bicycle Crunch", set: "3 × 20", muscle: "Perut" },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Kamis",
+            badge: "Istirahat",
+            badgeClass: "badge-rest",
+            focus: "Recovery",
+            rest: true,
+          },
+          {
+            day: "Jumat",
+            badge: "Latihan",
+            badgeClass: "badge-active",
+            focus: "Bahu + Core",
+            sections: [
+              {
+                label: "Warm-up (10 menit)",
+                exercises: [
+                  {
+                    name: "Treadmill jalan santai",
+                    set: "10 menit",
+                    muscle: "",
+                  },
+                ],
+              },
+              {
+                label: "Latihan inti",
+                exercises: [
+                  {
+                    name: "Overhead Shoulder Press",
+                    set: "4 × 10",
+                    muscle: "Bahu",
+                  },
+                  {
+                    name: "Lateral Raise",
+                    set: "4 × 15",
+                    muscle: "Bahu lebar",
+                  },
+                  {
+                    name: "Front Raise",
+                    set: "3 × 12",
+                    muscle: "Bahu depan",
+                  },
+                  {
+                    name: "Face Pull",
+                    set: "3 × 15",
+                    muscle: "Bahu belakang",
+                  },
+                ],
+              },
+              {
+                label: "Core intensif",
+                exercises: [
+                  { name: "Plank", set: "3 × 45 dtk", muscle: "Core" },
+                  {
+                    name: "Hanging Leg Raise",
+                    set: "3 × 15",
+                    muscle: "Perut",
+                  },
+                  { name: "Ab Wheel Rollout", set: "3 × 10", muscle: "Core" },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Sabtu",
+            badge: "Opsional",
+            badgeClass: "badge-active",
+            focus: "Kaki (opsional)",
+            sections: [
+              {
+                label: "Latihan kaki (opsional)",
+                exercises: [
+                  { name: "Squat", set: "4 × 10", muscle: "Paha" },
+                  { name: "Leg Press", set: "3 × 12", muscle: "Paha" },
+                  {
+                    name: "Romanian Deadlift",
+                    set: "3 × 10",
+                    muscle: "Paha belakang",
+                  },
+                  { name: "Calf Raise", set: "3 × 15", muscle: "Betis" },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Minggu",
+            badge: "Istirahat",
+            badgeClass: "badge-rest",
+            focus: "Recovery",
+            rest: true,
+          },
+        ],
+      },
+      cewek: {
+        tip: "Fokus glute, lower body berisi, dan upper body proporsional. Program 3x seminggu, boleh tambah pilates sebagai pelengkap.",
+        stats: { hari: 3, optional: 1, exercises: 20 },
+        days: [
+          {
+            day: "Senin",
+            badge: "Latihan",
+            badgeClass: "badge-active",
+            focus: "Glute + Kaki",
+            sections: [
+              {
+                label: "Warm-up (10 menit)",
+                exercises: [
+                  {
+                    name: "Treadmill jalan santai atau bersepeda",
+                    set: "10 menit",
+                    muscle: "",
+                  },
+                ],
+              },
+              {
+                label: "Latihan inti",
+                exercises: [
+                  {
+                    name: "Hip Thrust (barbell/mesin)",
+                    set: "4 × 12",
+                    muscle: "Glute",
+                  },
+                  {
+                    name: "Squat (goblet/barbell)",
+                    set: "3 × 12",
+                    muscle: "Paha + Glute",
+                  },
+                  {
+                    name: "Romanian Deadlift",
+                    set: "3 × 12",
+                    muscle: "Glute + Hamstring",
+                  },
+                  { name: "Leg Press", set: "3 × 15", muscle: "Paha" },
+                  { name: "Cable Kickback", set: "3 × 15", muscle: "Glute" },
+                ],
+              },
+              {
+                label: "Penutup",
+                exercises: [
+                  {
+                    name: "Stretching glute & hamstring",
+                    set: "5–10 menit",
+                    muscle: "",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Selasa",
+            badge: "Istirahat",
+            badgeClass: "badge-rest",
+            focus: "Recovery",
+            rest: true,
+          },
+          {
+            day: "Rabu",
+            badge: "Latihan",
+            badgeClass: "badge-active",
+            focus: "Upper Body",
+            sections: [
+              {
+                label: "Warm-up (10 menit)",
+                exercises: [
+                  {
+                    name: "Treadmill jalan santai",
+                    set: "10 menit",
+                    muscle: "",
+                  },
+                ],
+              },
+              {
+                label: "Latihan inti",
+                exercises: [
+                  { name: "Lat Pulldown", set: "3 × 12", muscle: "Punggung" },
+                  {
+                    name: "Seated Cable Row",
+                    set: "3 × 12",
+                    muscle: "Punggung",
+                  },
+                  {
+                    name: "Dumbbell Shoulder Press",
+                    set: "3 × 12",
+                    muscle: "Bahu",
+                  },
+                  { name: "Lateral Raise", set: "3 × 15", muscle: "Bahu" },
+                  { name: "Dumbbell Curl", set: "3 × 12", muscle: "Bisep" },
+                  {
+                    name: "Tricep Pushdown",
+                    set: "3 × 12",
+                    muscle: "Trisep",
+                  },
+                ],
+              },
+              {
+                label: "Core",
+                exercises: [
+                  { name: "Plank", set: "3 × 30 dtk", muscle: "Core" },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Kamis",
+            badge: "Istirahat / Pilates",
+            badgeClass: "badge-rest",
+            focus: "Aktif ringan",
+            rest: false,
+            sections: [
+              {
+                label: "Pilates / Yoga (opsional)",
+                exercises: [
+                  {
+                    name: "Pilates atau yoga ringan di rumah",
+                    set: "30–45 menit",
+                    muscle: "Postur & fleksibilitas",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Jumat",
+            badge: "Latihan",
+            badgeClass: "badge-active",
+            focus: "Glute + Full Body",
+            sections: [
+              {
+                label: "Warm-up (10 menit)",
+                exercises: [
+                  {
+                    name: "Treadmill jalan santai atau bersepeda",
+                    set: "10 menit",
+                    muscle: "",
+                  },
+                ],
+              },
+              {
+                label: "Latihan inti",
+                exercises: [
+                  {
+                    name: "Sumo Deadlift",
+                    set: "4 × 10",
+                    muscle: "Glute + Paha",
+                  },
+                  {
+                    name: "Bulgarian Split Squat",
+                    set: "3 × 10",
+                    muscle: "Paha + Glute",
+                  },
+                  { name: "Hip Thrust", set: "3 × 15", muscle: "Glute" },
+                  {
+                    name: "Incline Dumbbell Press",
+                    set: "3 × 12",
+                    muscle: "Dada",
+                  },
+                  { name: "Cable Row", set: "3 × 12", muscle: "Punggung" },
+                ],
+              },
+              {
+                label: "Core",
+                exercises: [
+                  {
+                    name: "Plank + Side Plank",
+                    set: "3 × 30 dtk",
+                    muscle: "Core",
+                  },
+                  {
+                    name: "Glute Bridge",
+                    set: "3 × 20",
+                    muscle: "Glute + Core",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            day: "Sabtu",
+            badge: "Istirahat",
+            badgeClass: "badge-rest",
+            focus: "Recovery",
+            rest: true,
+          },
+          {
+            day: "Minggu",
+            badge: "Istirahat",
+            badgeClass: "badge-rest",
+            focus: "Recovery",
+            rest: true,
+          },
+        ],
+      },
+    };
 
-  <div id="stats-container"></div>
+    const dayMap = {
+      Senin: "Sen",
+      Selasa: "Sel",
+      Rabu: "Rab",
+      Kamis: "Kam",
+      Jumat: "Jum",
+      Sabtu: "Sab",
+      Minggu: "Min",
+    };
+    let currentGender = "cowok";
 
-  <div id="tab-cowok" class="tab-content active"></div>
-  <div id="tab-cewek" class="tab-content"></div>
-</div>
-
-<script>
-const data = {
-  cowok: {
-    tip: "Fokus otot lengan, bahu lebar, dada, dan six pack. Program Push/Pull/Legs 3–4x seminggu.",
-    stats: { hari: 3, optional: 1, exercises: 22 },
-    days: [
-      { day:"Senin", badge:"Latihan", badgeClass:"badge-active", focus:"Dada + Trisep", sections:[
-        { label:"Warm-up (10 menit)", exercises:[{ name:"Treadmill jalan santai", set:"10 menit", muscle:"" }]},
-        { label:"Latihan inti", exercises:[
-          { name:"Flat Bench Press", set:"4 × 10", muscle:"Dada" },
-          { name:"Incline Dumbbell Press", set:"3 × 12", muscle:"Dada atas" },
-          { name:"Cable Chest Fly", set:"3 × 12", muscle:"Dada" },
-          { name:"Tricep Pushdown", set:"3 × 12", muscle:"Trisep" },
-          { name:"Skull Crusher", set:"3 × 10", muscle:"Trisep" },
-        ]},
-        { label:"Core (penutup)", exercises:[
-          { name:"Plank", set:"3 × 40 dtk", muscle:"Core" },
-          { name:"Cable Crunch", set:"3 × 15", muscle:"Perut" },
-        ]}
-      ]},
-      { day:"Selasa", badge:"Istirahat", badgeClass:"badge-rest", focus:"Recovery", rest:true },
-      { day:"Rabu", badge:"Latihan", badgeClass:"badge-active", focus:"Punggung + Bisep", sections:[
-        { label:"Warm-up (10 menit)", exercises:[{ name:"Treadmill jalan santai", set:"10 menit", muscle:"" }]},
-        { label:"Latihan inti", exercises:[
-          { name:"Lat Pulldown", set:"4 × 10", muscle:"Punggung" },
-          { name:"Seated Cable Row", set:"3 × 12", muscle:"Punggung" },
-          { name:"Barbell Row", set:"3 × 10", muscle:"Punggung" },
-          { name:"Barbell Curl", set:"3 × 12", muscle:"Bisep" },
-          { name:"Hammer Curl", set:"3 × 12", muscle:"Bisep" },
-        ]},
-        { label:"Core (penutup)", exercises:[
-          { name:"Hanging Leg Raise", set:"3 × 12", muscle:"Perut" },
-          { name:"Bicycle Crunch", set:"3 × 20", muscle:"Perut" },
-        ]}
-      ]},
-      { day:"Kamis", badge:"Istirahat", badgeClass:"badge-rest", focus:"Recovery", rest:true },
-      { day:"Jumat", badge:"Latihan", badgeClass:"badge-active", focus:"Bahu + Core", sections:[
-        { label:"Warm-up (10 menit)", exercises:[{ name:"Treadmill jalan santai", set:"10 menit", muscle:"" }]},
-        { label:"Latihan inti", exercises:[
-          { name:"Overhead Shoulder Press", set:"4 × 10", muscle:"Bahu" },
-          { name:"Lateral Raise", set:"4 × 15", muscle:"Bahu lebar" },
-          { name:"Front Raise", set:"3 × 12", muscle:"Bahu depan" },
-          { name:"Face Pull", set:"3 × 15", muscle:"Bahu belakang" },
-        ]},
-        { label:"Core intensif", exercises:[
-          { name:"Plank", set:"3 × 45 dtk", muscle:"Core" },
-          { name:"Hanging Leg Raise", set:"3 × 15", muscle:"Perut" },
-          { name:"Ab Wheel Rollout", set:"3 × 10", muscle:"Core" },
-        ]}
-      ]},
-      { day:"Sabtu", badge:"Opsional", badgeClass:"badge-active", focus:"Kaki (opsional)", sections:[
-        { label:"Latihan kaki (opsional)", exercises:[
-          { name:"Squat", set:"4 × 10", muscle:"Paha" },
-          { name:"Leg Press", set:"3 × 12", muscle:"Paha" },
-          { name:"Romanian Deadlift", set:"3 × 10", muscle:"Paha belakang" },
-          { name:"Calf Raise", set:"3 × 15", muscle:"Betis" },
-        ]}
-      ]},
-      { day:"Minggu", badge:"Istirahat", badgeClass:"badge-rest", focus:"Recovery", rest:true },
-    ]
-  },
-  cewek: {
-    tip: "Fokus glute, lower body berisi, dan upper body proporsional. Program 3x seminggu, boleh tambah pilates sebagai pelengkap.",
-    stats: { hari: 3, optional: 1, exercises: 20 },
-    days: [
-      { day:"Senin", badge:"Latihan", badgeClass:"badge-active", focus:"Glute + Kaki", sections:[
-        { label:"Warm-up (10 menit)", exercises:[{ name:"Treadmill jalan santai atau bersepeda", set:"10 menit", muscle:"" }]},
-        { label:"Latihan inti", exercises:[
-          { name:"Hip Thrust (barbell/mesin)", set:"4 × 12", muscle:"Glute" },
-          { name:"Squat (goblet/barbell)", set:"3 × 12", muscle:"Paha + Glute" },
-          { name:"Romanian Deadlift", set:"3 × 12", muscle:"Glute + Hamstring" },
-          { name:"Leg Press", set:"3 × 15", muscle:"Paha" },
-          { name:"Cable Kickback", set:"3 × 15", muscle:"Glute" },
-        ]},
-        { label:"Penutup", exercises:[{ name:"Stretching glute & hamstring", set:"5–10 menit", muscle:"" }]}
-      ]},
-      { day:"Selasa", badge:"Istirahat", badgeClass:"badge-rest", focus:"Recovery", rest:true },
-      { day:"Rabu", badge:"Latihan", badgeClass:"badge-active", focus:"Upper Body", sections:[
-        { label:"Warm-up (10 menit)", exercises:[{ name:"Treadmill jalan santai", set:"10 menit", muscle:"" }]},
-        { label:"Latihan inti", exercises:[
-          { name:"Lat Pulldown", set:"3 × 12", muscle:"Punggung" },
-          { name:"Seated Cable Row", set:"3 × 12", muscle:"Punggung" },
-          { name:"Dumbbell Shoulder Press", set:"3 × 12", muscle:"Bahu" },
-          { name:"Lateral Raise", set:"3 × 15", muscle:"Bahu" },
-          { name:"Dumbbell Curl", set:"3 × 12", muscle:"Bisep" },
-          { name:"Tricep Pushdown", set:"3 × 12", muscle:"Trisep" },
-        ]},
-        { label:"Core", exercises:[{ name:"Plank", set:"3 × 30 dtk", muscle:"Core" }]}
-      ]},
-      { day:"Kamis", badge:"Istirahat / Pilates", badgeClass:"badge-rest", focus:"Aktif ringan", rest:false, sections:[
-        { label:"Pilates / Yoga (opsional)", exercises:[{ name:"Pilates atau yoga ringan di rumah", set:"30–45 menit", muscle:"Postur & fleksibilitas" }]}
-      ]},
-      { day:"Jumat", badge:"Latihan", badgeClass:"badge-active", focus:"Glute + Full Body", sections:[
-        { label:"Warm-up (10 menit)", exercises:[{ name:"Treadmill jalan santai atau bersepeda", set:"10 menit", muscle:"" }]},
-        { label:"Latihan inti", exercises:[
-          { name:"Sumo Deadlift", set:"4 × 10", muscle:"Glute + Paha" },
-          { name:"Bulgarian Split Squat", set:"3 × 10", muscle:"Paha + Glute" },
-          { name:"Hip Thrust", set:"3 × 15", muscle:"Glute" },
-          { name:"Incline Dumbbell Press", set:"3 × 12", muscle:"Dada" },
-          { name:"Cable Row", set:"3 × 12", muscle:"Punggung" },
-        ]},
-        { label:"Core", exercises:[
-          { name:"Plank + Side Plank", set:"3 × 30 dtk", muscle:"Core" },
-          { name:"Glute Bridge", set:"3 × 20", muscle:"Glute + Core" },
-        ]}
-      ]},
-      { day:"Sabtu", badge:"Istirahat", badgeClass:"badge-rest", focus:"Recovery", rest:true },
-      { day:"Minggu", badge:"Istirahat", badgeClass:"badge-rest", focus:"Recovery", rest:true },
-    ]
-  }
-};
-
-const dayMap = {Senin:'Sen',Selasa:'Sel',Rabu:'Rab',Kamis:'Kam',Jumat:'Jum',Sabtu:'Sab',Minggu:'Min'};
-let currentGender = 'cowok';
-
-function renderStats(gender) {
-  const s = data[gender].stats;
-  const cls = gender === 'cowok' ? 'cowok-text' : 'cewek-text';
-  document.getElementById('stats-container').innerHTML = `
+    function renderStats(gender) {
+      const s = data[gender].stats;
+      const cls = gender === "cowok" ? "cowok-text" : "cewek-text";
+      document.getElementById("stats-container").innerHTML = `
     <div class="stats-row">
       <div class="stat-card"><div class="stat-value ${cls}">${s.hari}×</div><div class="stat-label">Per Minggu</div></div>
       <div class="stat-card"><div class="stat-value ${cls}">${s.optional}</div><div class="stat-label">Opsional</div></div>
       <div class="stat-card"><div class="stat-value ${cls}">${s.exercises}</div><div class="stat-label">Gerakan</div></div>
     </div>`;
-}
+    }
 
-function renderTab(gender) {
-  const d = data[gender];
-  const el = document.getElementById('tab-' + gender);
-  const tagClass = gender === 'cowok' ? 'cowok-tag' : 'cewek-tag';
-  const numClass = gender === 'cowok' ? 'cowok-bg' : 'cewek-bg';
-  let idx = 0;
+    function renderTab(gender) {
+      const d = data[gender];
+      const el = document.getElementById("tab-" + gender);
+      const tagClass = gender === "cowok" ? "cowok-tag" : "cewek-tag";
+      const numClass = gender === "cowok" ? "cowok-bg" : "cewek-bg";
+      let idx = 0;
 
-  let html = `<div class="tip-box"><span class="tip-icon">💡</span><span>${d.tip}</span></div>`;
+      let html = `<div class="tip-box"><span class="tip-icon">💡</span><span>${d.tip}</span></div>`;
 
-  d.days.forEach((day, i) => {
-    const delay = `animation-delay:${i * 0.06}s`;
-    if (day.rest && !day.sections) {
-      html += `<div class="rest-box" style="${delay}">
+      d.days.forEach((day, i) => {
+        const delay = `animation-delay:${i * 0.06}s`;
+        if (day.rest && !day.sections) {
+          html += `<div class="rest-box" style="${delay}">
         <div class="rest-icon">😴</div>
         <div class="rest-day">${day.day}</div>
         <div class="rest-desc">Istirahat & recovery — tidur cukup, makan bergizi</div>
       </div>`;
-    } else {
-      idx++;
-      html += `<div class="day-card" style="${delay}">
+        } else {
+          idx++;
+          html += `<div class="day-card" style="${delay}">
         <div class="day-header">
           <div class="day-number ${numClass}">${dayMap[day.day]}</div>
           <div class="day-info">
@@ -428,43 +1013,49 @@ function renderTab(gender) {
           <span class="day-badge ${day.badgeClass}">${day.badge}</span>
         </div>
         <div class="exercise-list">`;
-      day.sections.forEach(sec => {
-        html += `<div class="section-label">${sec.label}</div>`;
-        sec.exercises.forEach(ex => {
-          html += `<div class="exercise-item">
+          day.sections.forEach((sec) => {
+            html += `<div class="section-label">${sec.label}</div>`;
+            sec.exercises.forEach((ex) => {
+              html += `<div class="exercise-item">
             <span class="exercise-name">${ex.name}</span>
             <div class="exercise-meta">
-              ${ex.muscle ? `<span class="muscle-tag ${tagClass}">${ex.muscle}</span>` : ''}
+              ${ex.muscle ? `<span class="muscle-tag ${tagClass}">${ex.muscle}</span>` : ""}
               <span class="exercise-set">${ex.set}</span>
             </div>
           </div>`;
-        });
+            });
+          });
+          html += `</div></div>`;
+        }
       });
-      html += `</div></div>`;
+      el.innerHTML = html;
     }
-  });
-  el.innerHTML = html;
-}
 
-function switchTab(gender) {
-  currentGender = gender;
-  const btnC = document.getElementById('btn-cowok');
-  const btnK = document.getElementById('btn-cewek');
-  btnC.className = 'tab-btn' + (gender === 'cowok' ? ' active-cowok' : '');
-  btnK.className = 'tab-btn' + (gender === 'cewek' ? ' active-cewek' : '');
+    function switchTab(gender) {
+      currentGender = gender;
+      const btnC = document.getElementById("btn-cowok");
+      const btnK = document.getElementById("btn-cewek");
+      btnC.className =
+        "tab-btn" + (gender === "cowok" ? " active-cowok" : "");
+      btnK.className =
+        "tab-btn" + (gender === "cewek" ? " active-cewek" : "");
 
-  const fill = document.getElementById('progress-fill');
-  fill.className = 'fill ' + (gender === 'cowok' ? 'cowok-fill' : 'cewek-fill');
-  fill.style.width = gender === 'cowok' ? '43%' : '43%';
+      const fill = document.getElementById("progress-fill");
+      fill.className =
+        "fill " + (gender === "cowok" ? "cowok-fill" : "cewek-fill");
+      fill.style.width = gender === "cowok" ? "43%" : "43%";
 
-  document.getElementById('tab-cowok').className = 'tab-content' + (gender === 'cowok' ? ' active' : '');
-  document.getElementById('tab-cewek').className = 'tab-content' + (gender === 'cewek' ? ' active' : '');
-  renderStats(gender);
-}
+      document.getElementById("tab-cowok").className =
+        "tab-content" + (gender === "cowok" ? " active" : "");
+      document.getElementById("tab-cewek").className =
+        "tab-content" + (gender === "cewek" ? " active" : "");
+      renderStats(gender);
+    }
 
-renderTab('cowok');
-renderTab('cewek');
-renderStats('cowok');
-</script>
+    renderTab("cowok");
+    renderTab("cewek");
+    renderStats("cowok");
+  </script>
 </body>
+
 </html>
